@@ -7,12 +7,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.sts.login.*;
 import com.sts.repo.LoginRepository;
 import com.sts.repo.PasswordResetTokenRepository;
 import com.sts.security.JwtService;
 
+@Service
 public class LoginService {
     private static final Logger logger = LogManager.getLogger(LoginService.class);
     private final LoginRepository loginRepository;

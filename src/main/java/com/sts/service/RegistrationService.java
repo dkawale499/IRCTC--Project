@@ -1,6 +1,7 @@
 package com.sts.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.sts.login.Login;
 import com.sts.registration.Registration;
@@ -8,6 +9,7 @@ import com.sts.registration.RegistrationRequest;
 import com.sts.repo.LoginRepository;
 import com.sts.repo.RegistrationRepository;
 
+@Service
 public class RegistrationService {
     private final RegistrationRepository registrationRepository;
     private final LoginRepository loginRepository;

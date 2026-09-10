@@ -47,11 +47,21 @@ public class TrainScheduleService {
         return savedSchedule;
     }
 
-    public List<TrainSchedule> getAllSchedules() { return trainScheduleRepository.findAll(); }
+    public List<TrainSchedule> getAllSchedules() {
+        List<TrainSchedule> schedules = trainScheduleRepository.findAll();
+        logger.debug("Retrieved {} train schedules", schedules.size());
+        return schedules;
+    }
 
     public List<TrainSchedule> search(String source, String destination, LocalDate journeyDate) {
-        return trainScheduleRepository.findBySourceIgnoreCaseAndDestinationIgnoreCaseAndJourneyDate(source.trim(),
-                destination.trim(), journeyDate);
+        String normalizedSource = source.trim();
+        String normalizedDestination = destination.trim();
+        logger.debug("Searching train schedules for date={}", journeyDate);
+        List<TrainSchedule> schedules = trainScheduleRepository
+                .findBySourceIgnoreCaseAndDestinationIgnoreCaseAndJourneyDate(normalizedSource, normalizedDestination,
+                        journeyDate);
+        logger.info("Train schedule search completed with {} result(s)", schedules.size());
+        return schedules;
     }
 
     private String requiredValue(String value, String fieldName) {

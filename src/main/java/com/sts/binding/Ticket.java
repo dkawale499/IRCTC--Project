@@ -1,8 +1,15 @@
 package com.sts.binding;
 
+import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sts.registration.Registration;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Column;
 
 @Entity
 public class Ticket {
@@ -17,6 +24,12 @@ public class Ticket {
 	private String doj;
 	private String source;
 	private String dest;
+	@Column(name = "ticket_fare", precision = 12, scale = 2)
+	private BigDecimal ticketFare;
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "registration_id")
+	private Registration registration;
 	
 	public Integer getTicketId() {
 		return ticketId;
@@ -72,6 +85,13 @@ public class Ticket {
 	public void setDest(String dest) {
 		this.dest = dest;
 	}
-	
+	public BigDecimal getTicketFare() {
+		return ticketFare == null ? new BigDecimal("100.00") : ticketFare;
+	}
+	public void setTicketFare(BigDecimal ticketFare) {
+		this.ticketFare = ticketFare;
+	}
+	public Registration getRegistration() { return registration; }
+	public void setRegistration(Registration registration) { this.registration = registration; }
 	
 }

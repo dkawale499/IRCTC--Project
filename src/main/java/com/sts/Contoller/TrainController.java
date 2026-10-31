@@ -3,6 +3,7 @@ package com.sts.Contoller;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,5 +30,13 @@ public class TrainController {
             @RequestParam String destination,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate journeyDate) {
         return ResponseEntity.ok(trainScheduleService.search(source, destination, journeyDate));
+    }
+
+    @GetMapping("/fare")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<java.math.BigDecimal> getTicketFare(
+            @RequestParam String trainNo,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate journeyDate) {
+        return ResponseEntity.ok(trainScheduleService.getTicketFare(trainNo, journeyDate));
     }
 }
